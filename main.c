@@ -1,3 +1,12 @@
+// Project Team Practicum
+//Kelompok 6:
+// 2902808196 - Ai Chairani
+// 2902824281 - Ahmad Thorik Annaufal
+// 2902816563 - Andhika Syukur Sukmana Putra
+// 2902816550 - Julyon Putra Sannie
+// 2902812262 - Erik Klaus Keifas Kalalo
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,12 +32,14 @@ History daftarHistory[MAX_DATA];
 int jmlBuku = 0;
 int jmlHistory = 0;
 
+// Memmbaca input teks dari User, lalu menghapus karakter newline agar data tersimpan lebih rapihh
 void bacaString(char pesan[], char hasil[], int ukuran) {
     printf("%s", pesan);
     fgets(hasil, ukuran, stdin);
     hasil[strcspn(hasil, "\n")] = '\0';
 }
 
+// Membaca input angka integer dari User dan memastikan input yang diberikan sudah valid.
 int bacaInt(char pesan[]) {
     char input[100];
     int angka;
@@ -45,6 +56,7 @@ int bacaInt(char pesan[]) {
     }
 }
 
+// Membaca input agka desimal dari User dan memastikan input yang diberikan sudah valid.
 double bacaDouble(char pesan[]) {
     char input[100];
     double angka;
@@ -61,10 +73,12 @@ double bacaDouble(char pesan[]) {
     }
 }
 
+// Membuat kode buku otomatis dengan format BK001, BK002, dan seterusnya berdasarkan jumlah data buku.
 void buatKodeBuku(char kodeBaru[]) {
     sprintf(kodeBaru, "BK%03d", jmlBuku + 1);
 }
 
+// Membaca data buku dan history dari file saat program pertama kali dijalankan.
 void loadData() {
     FILE *fBuku = fopen("databuku.txt", "r");
 
@@ -96,6 +110,7 @@ void loadData() {
     }
 }
 
+// Menyimpan seluruh data buku dan history transaksi terbaru ke dalam file.
 void simpanData() {
     FILE *fBuku = fopen("databuku.txt", "w");
 
@@ -131,6 +146,7 @@ void simpanData() {
     fclose(fHistory);
 }
 
+// Mengelola proses input data buku baru
 void inputBuku() {
     if (jmlBuku >= MAX_DATA) {
         printf("Data buku sudah penuh!\n");
@@ -159,6 +175,7 @@ void inputBuku() {
     printf("Data Buku Berhasil Ditambahkan!\n");
 }
 
+// Menampilkan seluruh data histori transaksi penjualan yang tersimpan di dalam program.
 void viewHistory() {
     printf("\n=== Histori Transaksi Penjualan ===\n");
 
@@ -181,6 +198,7 @@ void viewHistory() {
     }
 }
 
+// Menampilkan seluruh data buku yang tersedia beserta informasi kode, nama, jenis, dan harga buku.
 void viewBuku() {
     printf("\n=== Daftar Buku ===\n");
 
@@ -204,6 +222,7 @@ void viewBuku() {
     }
 }
 
+// Menghapus salah satu data history transaksi berdasarkan index yang dipilih oleh User.
 void deleteHistory() {
     if (jmlHistory == 0) {
         printf("\nBelum ada histori transaksi yang bisa dihapus.\n");
@@ -228,6 +247,7 @@ void deleteHistory() {
     printf("Data Successfully delete..\n");
 }
 
+// Menghapus salah satu data buku berdasarkan index yang dipilih oleh User.
 void deleteBuku() {
     if (jmlBuku == 0) {
         printf("\nBelum ada data buku yang bisa dihapus.\n");
@@ -252,6 +272,7 @@ void deleteBuku() {
     printf("Data Successfully delete..\n");
 }
 
+// Mencari posisi data buku berdasarkan kode buku yang dimasukkan oleh User.
 int cariBuku(char kode[]) {
     for (int i = 0; i < jmlBuku; i++) {
         if (strcmp(daftarBuku[i].kode, kode) == 0) {
@@ -262,6 +283,7 @@ int cariBuku(char kode[]) {
     return -1;
 }
 
+// Mengelola proses input transaksi penjualan, menghitung total harga, lalu menyimpannya ke history.
 void inputTransaksi() {
     if (jmlBuku == 0) {
         printf("\nBelum ada data buku. Tambahkan buku terlebih dahulu.\n");
@@ -308,6 +330,7 @@ void inputTransaksi() {
     printf("Transaksi berhasil dicatat.\n");
 }
 
+// Menampilkan daftar menu utama agar User dapat memilih fitur yang ingin dijalankan.
 void tampilMenu() {
     printf("\n========================================\n");
     printf(" TOKO BUKU LITERASI NUSANTARA JAYA\n");
@@ -322,6 +345,7 @@ void tampilMenu() {
     printf("========================================\n");
 }
 
+// Menjalankan alur utama program, mulai dari membaca data, memproses menu, hingga menyimpan data saat keluar.
 int main() {
     int menu;
 
