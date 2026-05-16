@@ -62,19 +62,7 @@ double bacaDouble(char pesan[]) {
 }
 
 void buatKodeBuku(char kodeBaru[]) {
-    int maxNomor = 0;
-
-    for (int i = 0; i < jmlBuku; i++) {
-        int nomor;
-
-        if (sscanf(daftarBuku[i].kode, "BK%d", &nomor) == 1) {
-            if (nomor > maxNomor) {
-                maxNomor = nomor;
-            }
-        }
-    }
-
-    sprintf(kodeBaru, "BK%03d", maxNomor + 1);
+    sprintf(kodeBaru, "BK%03d", jmlBuku + 1);
 }
 
 void loadData() {
@@ -320,72 +308,6 @@ void inputTransaksi() {
     printf("Transaksi berhasil dicatat.\n");
 }
 
-void tukarBuku(Buku *a, Buku *b) {
-    Buku temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-void bubbleSortNama() {
-    for (int i = 0; i < jmlBuku - 1; i++) {
-        for (int j = 0; j < jmlBuku - i - 1; j++) {
-            if (strcmp(daftarBuku[j].nama, daftarBuku[j + 1].nama) > 0) {
-                tukarBuku(&daftarBuku[j], &daftarBuku[j + 1]);
-            }
-        }
-    }
-}
-
-void selectionSortHarga() {
-    for (int i = 0; i < jmlBuku - 1; i++) {
-        int indexTerbesar = i;
-
-        for (int j = i + 1; j < jmlBuku; j++) {
-            if (daftarBuku[j].harga > daftarBuku[indexTerbesar].harga) {
-                indexTerbesar = j;
-            }
-        }
-
-        if (indexTerbesar != i) {
-            tukarBuku(&daftarBuku[i], &daftarBuku[indexTerbesar]);
-        }
-    }
-}
-
-void sortBuku() {
-    if (jmlBuku == 0) {
-        printf("\nTidak ada data buku untuk diurutkan.\n");
-        return;
-    }
-
-    char pilihan[10];
-
-    do {
-        printf("\n=== Sort Buku ===\n");
-        printf("a. Urutkan berdasarkan nama buku ascending (Bubble Sort)\n");
-        printf("b. Urutkan berdasarkan harga buku descending (Selection Sort)\n");
-        printf("c. Kembali ke menu utama\n");
-        printf("Pilih menu: ");
-
-        fgets(pilihan, sizeof(pilihan), stdin);
-
-        if (pilihan[0] == 'a' || pilihan[0] == 'A') {
-            bubbleSortNama();
-            printf("\nData berhasil diurutkan berdasarkan nama buku ascending.\n");
-            viewBuku();
-        } else if (pilihan[0] == 'b' || pilihan[0] == 'B') {
-            selectionSortHarga();
-            printf("\nData berhasil diurutkan berdasarkan harga buku descending.\n");
-            viewBuku();
-        } else if (pilihan[0] == 'c' || pilihan[0] == 'C') {
-            printf("Kembali ke menu utama.\n");
-        } else {
-            printf("Pilihan tidak valid!\n");
-        }
-
-    } while (pilihan[0] != 'c' && pilihan[0] != 'C');
-}
-
 void tampilMenu() {
     printf("\n========================================\n");
     printf(" TOKO BUKU LITERASI NUSANTARA JAYA\n");
@@ -397,7 +319,6 @@ void tampilMenu() {
     printf("5. Delete Buku\n");
     printf("6. Exit\n");
     printf("7. Input Transaksi Penjualan\n");
-    printf("8. Sort Buku\n");
     printf("========================================\n");
 }
 
@@ -440,9 +361,6 @@ int main() {
                 inputTransaksi();
                 break;
 
-            case 8:
-                sortBuku();
-                break;
 
             default:
                 printf("Menu tidak valid!\n");
